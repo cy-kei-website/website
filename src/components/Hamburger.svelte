@@ -1,7 +1,14 @@
-<script>
+<script lang="ts">
     import NavLinks from "./NavLinks.svelte";
+    import { navigating } from "$app/stores";
 
     let open = false;
+
+    navigating.subscribe((n) => {
+        if (n) {
+            open = false;
+        }
+    });
 </script>
 
 <div class="wrapper">

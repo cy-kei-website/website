@@ -59,6 +59,16 @@
         grid-template-areas: "content";
     }
 
+    @media screen and (max-width: 35rem) {
+        .grid.image-left, .grid.image-right {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr min-content;
+            grid-template-areas:
+                "content"
+                "picture";
+        }
+    }
+
     .picture {
         grid-area: picture;
     }
