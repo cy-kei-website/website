@@ -1,0 +1,90 @@
+html, body {
+    margin: 0;
+    padding: 0;
+
+    --ff-heading: "Aboreto";
+    --ff-text: "Montserrat";
+
+    --color-primary: rgb(68, 90, 38);
+    --color-primary-light: rgba(43, 92, 8, 0.5);
+
+    font-family: var(--ff-text);
+}
+
+.backdrop-blur-strong {
+    backdrop-filter: blur(0.5rem);
+}
+
+.backdrop-blur-very-strong {
+    backdrop-filter: blur(0.7rem);
+}
+
+.bg-light {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.bg-very-light {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+h1, h2 {
+    font-family: var(--ff-heading);
+    font-weight: lighter;
+
+    text-shadow: 0 0 2rem rgba(255, 255, 255, 0.85);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+.yt-video {
+    display: block;
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.links.vertical li a {
+    font-size: 2rem;
+}
+
+a.cta, a.cta-inverted, button.cta, button.cta-inverted {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid var(--color-primary);
+    
+    transition: 0.25s;
+}
+
+a.cta, button.cta {
+    color: var(--color-primary);
+}
+
+a.cta:hover, button.cta:hover {
+    color: white;
+    background-color: var(--color-primary);
+}
+
+a.cta-inverted, button.cta-inverted {
+    color: white;
+    background-color: var(--color-primary);
+}
+
+a.cta-inverted:hover, button.cta-inverted:hover {
+    color: var(--color-primary);
+    background-color: white;
+}
