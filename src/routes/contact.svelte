@@ -1,29 +1,59 @@
 <script lang="ts">
     import PageStructure from "../components/PageStructure.svelte";
+    import emailjs from "@emailjs/browser";
 
-    function submit() {
+    enum FormState {
+        NORMAL,
+        SENDING,
+        SUCCESS,
+        ERROR
+    };
 
+    let state: FormState = FormState.NORMAL;
+
+    async function submit(e: Event) {
+        if (e.target instanceof Element) {
+            const form: HTMLFormElement = e.target as HTMLFormElement;
+            state = FormState.SENDING;
+
+            try {
+                await emailjs.sendForm("service_yndpnqd", "template_smd2rni", form, "JyZlcg8R1T-HNAxVz");
+                state = FormState.SUCCESS;
+                form.reset();
+            } catch (error) {
+                state = FormState.ERROR;
+            }
+        }
     }
 </script>
 
 <PageStructure title="Contact" imgName="contact-extrapic.jpg">
     <h2>Send me a message</h2>
-    <form on:submit|preventDefault={submit}>
-        <div class="form-group">
-            <label for="name">Your name</label>
-            <input type="text" id="name" placeholder=" " />
-        </div>
-        <div class="form-group">
-            <label for="email">Your email address</label>
-            <input type="email" id="email" placeholder=" " />
-        </div>
-        <div class="form-group">
-            <label for="message">Your message</label>
-            <textarea id="message" rows="10" />
-        </div>
+    {#if state === FormState.SUCCESS}
+        <p>Your message has been sent to me !</p>
+    {:else if state === FormState.SENDING}
+        <p>Sending...</p>
+    {:else}
+        <form on:submit|preventDefault={submit}>
+            {#if state === FormState.ERROR}
+                <p class="error">An error has occured, please try again</p>
+            {/if}
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="user_name" placeholder=" " />
+            </div>
+            <div class="form-group">
+                <label for="email">Your email address</label>
+                <input type="email" id="email" name="user_email" placeholder=" " />
+            </div>
+            <div class="form-group">
+                <label for="message">Your message</label>
+                <textarea id="message" name="message" rows="10" />
+            </div>
 
-        <button class="cta">Send</button>
-    </form>
+            <button class="cta">Send</button>
+        </form>
+    {/if}
 </PageStructure>
 
 <style>
@@ -59,6 +89,10 @@
 
     textarea {
         resize: vertical;
+    }
+
+    .error {
+        color: rgb(180, 0, 0);
     }
 
     button {
