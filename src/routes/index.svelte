@@ -1,6 +1,6 @@
 <script>
     import SocialLinks from "../components/SocialLinks.svelte";
-    import ConcertsList from "../components/ConcertsList.svelte";
+    import SmartConcertList from "../components/SmartConcertList.svelte";
 </script>
 
 <svelte:head>
@@ -34,7 +34,7 @@
     
         <section class="concerts backdrop-blur-very-strong bg-very-light">
             <h3>Concerts</h3>
-            <ConcertsList />
+            <SmartConcertList mode="upcoming" maxCount={5} />
             <a href="/concerts" class="cta">See All Concerts</a>
         </section>
         

@@ -2,7 +2,8 @@
     import type { Concert } from "../types/concert";
     import { browser } from '$app/env';
     import { onMount } from "svelte";
-    import { concerts, Status } from "../stores/concerts";
+
+    export let concertsList: Concert[];
 
     export let maxCount = -1;
 
@@ -22,30 +23,24 @@
         }
     });
 
-    $: truncatedConcerts = maxCount > 0 ? $concerts.concerts.slice(0, maxCount) : $concerts.concerts;
+    $: truncatedConcerts = maxCount > 0 ? concertsList.slice(0, maxCount) : concertsList;
 
     $: compact = forceCompact || autoCompact;
 </script>
 
-{#if $concerts.status === Status.OK}
-    <ul class:compact={compact}>
-        {#each truncatedConcerts as concert}
-            <li>
-                <a href={concert.url} target="_blank" rel="noopener noreferrer">
-                    <div class="concert-container">
-                        <div class="concert-date">{ formatConcertDate(concert) }</div>
-                        <div class="concert-title">{ concert.location }</div>
-                        <div class="concert-description">{ concert.description }</div>
-                    </div>
-                </a>
-            </li>
-        {/each}
-    </ul>
-{:else if $concerts.status === Status.FAILED}
-    <p>An error occured while fetching the concerts</p>
-{:else if $concerts.status === Status.PENDING}
-    <p>Loading</p>
-{/if}
+<ul class:compact={compact}>
+    {#each truncatedConcerts as concert}
+        <li>
+            <a href={concert.url} target="_blank" rel="noopener noreferrer">
+                <div class="concert-container">
+                    <div class="concert-date">{ formatConcertDate(concert) }</div>
+                    <div class="concert-title">{ concert.location }</div>
+                    <div class="concert-description">{ concert.description }</div>
+                </div>
+            </a>
+        </li>
+    {/each}
+</ul>
 
 <style>
 

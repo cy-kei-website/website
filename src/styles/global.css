@@ -88,3 +88,25 @@ a.cta-inverted:hover, button.cta-inverted:hover {
     color: var(--color-primary);
     background-color: white;
 }
+
+button {
+    background: var(--color-primary);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: var(--color-primary-light);
+}
+
+
+    
+.concert-editor:nth-child(odd) > .container {
+    background-color: rgba(0, 0, 0, 0.04);
+}

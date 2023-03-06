@@ -8,12 +8,14 @@ export enum Status {
 };
 
 export interface ConcertFetchResult {
-    concerts: Concert[];
+    upcoming: Concert[];
+    past: Concert[];
     status: Status;
 }
 
 export const concerts = writable<ConcertFetchResult>({
-    concerts: [],
+    upcoming: [],
+    past: [],
     status: Status.PENDING
 });
 
@@ -43,21 +45,35 @@ export async function updateConcerts() {
         const res = await fetch("https://firestore.googleapis.com/v1/projects/cyprien-keiser/databases/(default)/documents/concerts");
         const json = await res.json();
 
-        const concertsArray: Concert[] = json.documents.map((rawConcert: RawConcert) => {
-            return {
+        const upcoming: Concert[] = [];
+        const past: Concert[] = [];
+        
+        json.documents.forEach((rawConcert: RawConcert) => {
+            const concert: Concert = {
                 location: rawConcert.fields.location.stringValue,
                 description: rawConcert.fields.description.stringValue,
                 date: new Date(rawConcert.fields.date.timestampValue)
-            } as Concert;
+            };
+
+            if (concert.date.getTime() < Date.now()) {
+                past.push(concert);
+            } else {
+                upcoming.push(concert);
+            }
         });
+
+        upcoming.sort((a, b) => a.date.getTime() - b.date.getTime());
+        past.sort((a, b) => b.date.getTime() - a.date.getTime());
     
         concerts.set({
-            concerts: concertsArray,
+            upcoming,
+            past,
             status: Status.OK
         });
     } catch (error) {
         concerts.set({
-            concerts: [],
+            upcoming: [],
+            past: [],
             status: Status.FAILED
         });
     }

@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@emailjs/browser": "^3.10.0"
+		"@emailjs/browser": "^3.10.0",
+		"firebase": "^9.17.1"
 	}
 }
