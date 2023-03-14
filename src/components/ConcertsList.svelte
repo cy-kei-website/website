@@ -98,6 +98,7 @@
 
     .concert-description {
         grid-area: description;
+        white-space: pre;
     }
 
 </style>

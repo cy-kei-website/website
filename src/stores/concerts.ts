@@ -65,6 +65,8 @@ export async function updateConcerts() {
 
         upcoming.sort((a, b) => a.date.getTime() - b.date.getTime());
         past.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+        console.log(upcoming);
     
         concerts.set({
             upcoming,

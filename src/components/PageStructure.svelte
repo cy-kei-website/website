@@ -2,7 +2,7 @@
     export let title: string = "";
     export let bgImgName: string = "home_bg.jpg";
     export let bgPosition: string = "0";
-    export let bgPositionMobile: string = "right -15rem top";
+    export let bgPositionMobile: string = "right -15rem top 0";
     export let imgName: string = "";
     export let imgAlt: string = "Cyprien Keiser";
     export let layout: "image-left" | "image-right" | "content-only" = "image-left";

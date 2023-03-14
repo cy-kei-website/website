@@ -110,7 +110,7 @@
 
         padding: 1rem 0;
 
-        box-shadow: 0 -2rem 2rem 2rem rgba(255, 255, 255, 0.4);
+        box-shadow: 0 -4rem 4rem 2rem rgba(255, 255, 255, 0.4);
     }
     
     @media screen and (max-width: 50rem) {
