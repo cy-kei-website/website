@@ -5,7 +5,7 @@ html, body {
     --ff-heading: "Aboreto";
     --ff-text: "Montserrat";
 
-    --color-primary: rgb(68, 90, 38);
+    --color-primary: rgb(64, 90, 38);
     --color-primary-light: rgba(43, 92, 8, 0.5);
 
     font-family: var(--ff-text);
@@ -72,6 +72,7 @@ a.cta, a.cta-inverted, button.cta, button.cta-inverted {
 
 a.cta, button.cta {
     color: var(--color-primary);
+    box-shadow: 0 0 1rem rgba(43, 92, 8, 0.15);
 }
 
 a.cta:hover, button.cta:hover {
@@ -82,6 +83,7 @@ a.cta:hover, button.cta:hover {
 a.cta-inverted, button.cta-inverted {
     color: white;
     background-color: var(--color-primary);
+    box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
 }
 
 a.cta-inverted:hover, button.cta-inverted:hover {

@@ -1,7 +1,8 @@
 <script lang="ts">
     export let title: string = "";
     export let bgImgName: string = "home_bg.jpg";
-    export let bgPosition: string = "90%";
+    export let bgPosition: string = "0";
+    export let bgPositionMobile: string = "right -15rem top";
     export let imgName: string = "";
     export let imgAlt: string = "Cyprien Keiser";
     export let layout: "image-left" | "image-right" | "content-only" = "image-left";
@@ -11,7 +12,7 @@
     <title>Cyprien Keiser - {title}</title>
 </svelte:head>
 
-<main style="background-image: url(/imgs/{bgImgName}); background-position: {bgPosition};">
+<main style="background-image: url(/imgs/{bgImgName}); --bg-pos: {bgPosition}; --bg-pos-mobile: {bgPositionMobile};">
     <h1>{ title }</h1>
     <div class="page-content backdrop-blur-very-strong bg-very-light">
         <div class="grid {layout}">
@@ -31,7 +32,10 @@
     main {
         padding-top: 30rem;
 
+        background-attachment: fixed;
+
         background-size: cover;
+        background-position: var(--bg-pos);
     }
 
     .page-content {
@@ -60,6 +64,9 @@
     }
 
     @media screen and (max-width: 35rem) {
+        main {
+            background-position: var(--bg-pos-mobile);
+        }
         .grid.image-left, .grid.image-right {
             grid-template-columns: 1fr;
             grid-template-rows: 1fr min-content;

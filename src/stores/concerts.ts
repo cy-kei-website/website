@@ -52,7 +52,8 @@ export async function updateConcerts() {
             const concert: Concert = {
                 location: rawConcert.fields.location.stringValue,
                 description: rawConcert.fields.description.stringValue,
-                date: new Date(rawConcert.fields.date.timestampValue)
+                date: new Date(rawConcert.fields.date.timestampValue),
+                url: rawConcert.fields.url?.stringValue ?? ""
             };
 
             if (concert.date.getTime() < Date.now()) {

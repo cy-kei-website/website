@@ -40,18 +40,18 @@
             {/if}
             <div class="form-group">
                 <label for="name">Your name</label>
-                <input type="text" id="name" name="user_name" placeholder=" " />
+                <input type="text" id="name" name="from_name" placeholder=" " />
             </div>
             <div class="form-group">
                 <label for="email">Your email address</label>
-                <input type="email" id="email" name="user_email" placeholder=" " />
+                <input type="email" id="email" name="from_email" placeholder=" " />
             </div>
             <div class="form-group">
                 <label for="message">Your message</label>
                 <textarea id="message" name="message" rows="10" />
             </div>
 
-            <button class="cta">Send</button>
+            <button class="cta-inverted">Send</button>
         </form>
     {/if}
 </PageStructure>

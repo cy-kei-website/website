@@ -23,6 +23,7 @@
             <NavLinks vertical={true} />
         </div>
     </div>
+    <div class="backdrop" class:open={open} />
 </div>
 
 <style>
@@ -78,6 +79,23 @@
         opacity: 1;
         pointer-events: all;
         transform: translateX(0);
+    }
+
+    .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        opacity: 0;
+        z-index: 999;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.4);
+        transition: 0.5s;
+    }
+
+    .backdrop.open {
+        opacity: 1;
     }
 
     .mobile-nav {

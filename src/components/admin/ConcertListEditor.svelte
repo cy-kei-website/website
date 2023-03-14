@@ -33,7 +33,8 @@
         const docRef = await addDoc(concertsCol, {
             location: "",
             description: "",
-            date: new Date()
+            date: new Date(),
+            url: ""
         });
 
         concertsRefs = [...concertsRefs, docRef];
