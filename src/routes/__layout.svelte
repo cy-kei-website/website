@@ -2,9 +2,11 @@
     import Nav from '../components/Nav.svelte';
     import SocialLinks from "../components/SocialLinks.svelte";
     import { updateConcerts } from "../stores/concerts";
+    import { updateBios } from "../stores/bios";
     import "../styles/global.css";
 
     updateConcerts();
+    updateBios();
 </script>
 
 <Nav />

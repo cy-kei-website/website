@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type { Concert } from "../../types/concert";
     import { onMount } from "svelte";
-    import { adminUser } from "../../firebase/stores";
     import { addDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
     import ConcertEditor from "./ConcertEditor.svelte";
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { concerts, Status } from "../stores/concerts";
+    import { concerts } from "../stores/concerts";
+    import { Status } from "../types/status";
     import ConcertsList from "./ConcertsList.svelte";
 
     export let mode: "upcoming" | "past" = "upcoming";

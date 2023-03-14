@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
 import { adminUser } from "./stores";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -37,5 +37,7 @@ export const concertsCollection = collection(db, "concerts");
 export async function getConcerts() {
     return getDocs(concertsCollection);
 }
+
+export const biosCollection = collection(db, "bios");
 
 const analytics = getAnalytics(app);

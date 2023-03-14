@@ -1,11 +1,6 @@
-import type { Concert } from "src/types/concert";
+import type { Concert } from "../types/concert";
+import { Status } from "../types/status";
 import { writable } from "svelte/store";
-
-export enum Status {
-    OK,
-    FAILED,
-    PENDING
-};
 
 export interface ConcertFetchResult {
     upcoming: Concert[];
@@ -65,8 +60,6 @@ export async function updateConcerts() {
 
         upcoming.sort((a, b) => a.date.getTime() - b.date.getTime());
         past.sort((a, b) => b.date.getTime() - a.date.getTime());
-
-        console.log(upcoming);
     
         concerts.set({
             upcoming,

@@ -1,6 +1,7 @@
 <script>
     import SocialLinks from "../components/SocialLinks.svelte";
     import SmartConcertList from "../components/SmartConcertList.svelte";
+    import { bios } from "../stores/bios";
 </script>
 
 <svelte:head>
@@ -10,7 +11,6 @@
 <div id="home-wrapper">
     <div id="home-bg" />
     <section class="splash">
-        <!-- <div class="backdrop backdrop-blur-strong bg-light"></div> -->
         <div class="text">
                 <h1 class="name">Cyprien Keiser</h1>
                 <h2 class="instrument">Cellist</h2>
@@ -21,7 +21,8 @@
     <div class="grid bg-light">
         <section class="mini-bio backdrop-blur-very-strong bg-very-light">
             <h3>About Cyprien</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto nesciunt maxime animi, rerum dolorum reiciendis ratione sapiente facere, eius officiis, tempora fugit! Rem blanditiis sint nulla placeat id adipisci possimus, numquam fugit nostrum exercitationem commodi voluptatibus quae tempora autem minus ducimus quam velit facere maiores ipsa amet, officia eum culpa.</p>
+            <!-- TODO : make more SSR-friendly -->
+            <p>{ $bios.short.en }</p>
             
             <a href="/bio" class="cta">See Biography</a>
         </section>
@@ -105,7 +106,7 @@
             "bio bio media media"
             "gallery concerts concerts concerts";
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 2fr 2fr;
+        grid-template-rows: min-content 1fr;
         gap: 1rem;
 
         padding: 1rem 0;

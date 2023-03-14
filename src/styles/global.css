@@ -106,9 +106,12 @@ button {
 button:hover {
     background: var(--color-primary-light);
 }
-
-
     
 .concert-editor:nth-child(odd) > .container {
     background-color: rgba(0, 0, 0, 0.04);
+}
+
+input, textarea {
+    display: block;
+    font: inherit;
 }
