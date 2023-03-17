@@ -50,7 +50,6 @@ async function getFull() {
 export async function updateBios() {
     try {
         const responses = await Promise.all([getShort(), getFull()]);
-        console.log(responses);
         bios.set({
             short: {
                 ...responses[0]

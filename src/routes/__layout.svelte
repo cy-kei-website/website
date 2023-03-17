@@ -3,10 +3,12 @@
     import SocialLinks from "../components/SocialLinks.svelte";
     import { updateConcerts } from "../stores/concerts";
     import { updateBios } from "../stores/bios";
+    import { updateGallery } from "../stores/gallery";
     import "../styles/global.css";
 
     updateConcerts();
     updateBios();
+    updateGallery();
 </script>
 
 <Nav />

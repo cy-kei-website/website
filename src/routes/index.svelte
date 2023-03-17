@@ -22,7 +22,7 @@
         <section class="mini-bio backdrop-blur-very-strong bg-very-light">
             <h3>About Cyprien</h3>
             <!-- TODO : make more SSR-friendly -->
-            <p>{ $bios.short.en }</p>
+            <p class="line-breaks">{ $bios.short.en }</p>
             
             <a href="/bio" class="cta">See Biography</a>
         </section>

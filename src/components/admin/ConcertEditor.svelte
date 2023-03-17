@@ -87,6 +87,7 @@
             "url-field url-field delete-button";
         
         grid-template-columns: 1fr 2fr 10rem;
+        grid-template-rows: min-content min-content min-content 8rem min-content min-content;
         gap: 0.5rem 1rem;
 
         transition: 0.2s;

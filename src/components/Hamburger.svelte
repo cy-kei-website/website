@@ -12,7 +12,7 @@
 </script>
 
 <div class="wrapper" class:slideover-open={open}>
-    <button class="hamburger" on:click={() => open = true}>
+    <button class="hamburger soft-button" on:click={() => open = true}>
         <img class="icon" src="/icons/hamburger-menu.svg" alt="Menu" />
     </button>
     <div class="slideover bg-very-light" class:open={open}>
@@ -33,25 +33,6 @@
 
     .slideover-open .hamburger {
         opacity: 0;
-    }
-    
-    button {
-        display: block;
-        height: 2rem;
-        aspect-ratio: 1 / 1;
-        background-color: transparent;
-        padding: 0.25rem;
-        border-radius: 0.5rem;
-        transition: 0.25s;
-    }
-
-    button:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-    }
-
-    img {
-        display: block;
-        height: 100%;
     }
 
     .slideover {

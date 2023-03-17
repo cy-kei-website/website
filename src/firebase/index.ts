@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { adminUser } from "./stores";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -39,5 +40,12 @@ export async function getConcerts() {
 }
 
 export const biosCollection = collection(db, "bios");
+
+export const galleryCollection = collection(db, "gallery");
+export async function getPictures() {
+    return getDocs(galleryCollection);
+}
+
+export const storage = getStorage(app);
 
 const analytics = getAnalytics(app);

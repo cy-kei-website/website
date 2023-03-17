@@ -15,6 +15,7 @@
                 <NavLink href="/admin">Analytics</NavLink>
                 <NavLink href="/admin/bio">Edit Bios</NavLink>
                 <NavLink href="/admin/concerts">Edit Concerts</NavLink>
+                <NavLink href="/admin/gallery">Edit Gallery</NavLink>
             </nav>
 
             <slot />

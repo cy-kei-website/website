@@ -23,6 +23,10 @@ html, body {
     background: rgba(255, 255, 255, 0.4);
 }
 
+.bg-mid-light {
+    background: rgba(255, 255, 255, 0.7);
+}
+
 .bg-very-light {
     background: rgba(255, 255, 255, 0.85);
 }
@@ -80,13 +84,13 @@ a.cta:hover, button.cta:hover {
     background-color: var(--color-primary);
 }
 
-a.cta-inverted, button.cta-inverted {
+a.cta-inverted, button.cta-inverted, label.cta-inverted {
     color: white;
     background-color: var(--color-primary);
     box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
 }
 
-a.cta-inverted:hover, button.cta-inverted:hover {
+a.cta-inverted:hover, button.cta-inverted:hover, label.cta-inverted:hover {
     color: var(--color-primary);
     background-color: white;
 }
@@ -114,4 +118,28 @@ button:hover {
 input, textarea {
     display: block;
     font: inherit;
+}
+
+.line-breaks {
+    white-space: pre-wrap;
+}
+    
+.soft-button {
+    display: block;
+    box-sizing: border-box;
+    height: 2rem;
+    aspect-ratio: 1 / 1;
+    background-color: transparent;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    transition: 0.25s;
+}
+
+.soft-button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.soft-button img {
+    display: block;
+    height: 100%;
 }
