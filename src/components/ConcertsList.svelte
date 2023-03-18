@@ -35,7 +35,7 @@
                 <div class="concert-container">
                     <div class="concert-date">{ formatConcertDate(concert) }</div>
                     <div class="concert-title">{ concert.location }</div>
-                    <div class="concert-description">{ concert.description }</div>
+                    <div class="concert-description line-breaks">{ concert.description }</div>
                 </div>
             </a>
         </li>
@@ -98,7 +98,6 @@
 
     .concert-description {
         grid-area: description;
-        white-space: pre;
     }
 
 </style>

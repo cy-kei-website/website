@@ -87,6 +87,10 @@
         border-radius: 2rem;
 
         color: white;
+
+        opacity: 0;
+
+        animation: title-appear 0.6s ease-out 0.2s forwards;
     }
 
     .name {
@@ -118,6 +122,10 @@
         padding: 1rem 0;
 
         box-shadow: 0 -4rem 4rem 2rem rgba(255, 255, 255, 0.4);
+
+        opacity: 0;
+
+        animation: bottom-appear 0.5s ease-out 0.5s forwards;
     }
     
     @media screen and (max-width: 50rem) {

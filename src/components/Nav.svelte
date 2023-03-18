@@ -28,6 +28,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        animation: content-appear 0.5s ease-out;
     }
 
     .logo {
