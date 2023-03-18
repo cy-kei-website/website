@@ -2,6 +2,8 @@
     import SocialLinks from "../components/SocialLinks.svelte";
     import SmartConcertList from "../components/SmartConcertList.svelte";
     import { bios } from "../stores/bios";
+    import LoadingSpinner from "../components/LoadingSpinner.svelte";
+    import { Status } from "../types/status";
 </script>
 
 <svelte:head>
@@ -22,7 +24,11 @@
         <section class="mini-bio backdrop-blur-very-strong bg-very-light">
             <h3>About Cyprien</h3>
             <!-- TODO : make more SSR-friendly -->
-            <p class="line-breaks">{ $bios.short.en }</p>
+            {#if $bios.status === Status.PENDING}
+                <LoadingSpinner message="Loading bio" />
+            {:else}
+                <p class="line-breaks">{ $bios.short.en }</p>
+            {/if}
             
             <a href="/bio" class="cta">See Biography</a>
         </section>

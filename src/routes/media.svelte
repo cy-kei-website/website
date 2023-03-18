@@ -2,6 +2,8 @@
     import PageStructure from "../components/PageStructure.svelte";
     import GalleryModal from "../components/GalleryModal.svelte";
     import { gallery, type GalleryPicture } from "../stores/gallery";
+    import { Status } from "../types/status";
+    import LoadingSpinner from "../components/LoadingSpinner.svelte";
 
     let modal: GalleryModal;
 
@@ -17,15 +19,20 @@
     </section>
     <section>
         <h2>Images</h2>
-        <div class="gallery">
-            {#each $gallery.pictures as picture}
-                <div class="gallery-item" tabindex="0" on:click={() => {openFullPicture(picture);}}>
-                    <img src={picture.thumbnailUrl} alt="Cyprien Keiser" class="gallery-image" />
-                    <div class="gallery-image-copyright bg-very-light">&#169; { picture.copyright }</div>
-                </div>
-            {/each}
-        </div>
-        <GalleryModal bind:this={modal} />
+
+        {#if $gallery.status === Status.PENDING}
+            <LoadingSpinner message="Loading gallery" />
+        {:else}
+            <div class="gallery">
+                {#each $gallery.pictures as picture}
+                    <div class="gallery-item" tabindex="0" on:click={() => {openFullPicture(picture);}}>
+                        <img src={picture.thumbnailUrl} alt="Cyprien Keiser" class="gallery-image" />
+                        <div class="gallery-image-copyright bg-very-light">&#169; { picture.copyright }</div>
+                    </div>
+                {/each}
+            </div>
+            <GalleryModal bind:this={modal} />
+        {/if}
     </section>
 </PageStructure>
 

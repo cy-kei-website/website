@@ -1,6 +1,7 @@
 <script lang="ts">
     import PageStructure from "../components/PageStructure.svelte";
     import emailjs from "@emailjs/browser";
+    import LoadingSpinner from "../components/LoadingSpinner.svelte";
 
     enum FormState {
         NORMAL,
@@ -29,10 +30,14 @@
 
 <PageStructure title="Contact" imgName="contact-extrapic.jpg">
     <h2>Send me a message</h2>
+
     {#if state === FormState.SUCCESS}
-        <p>Your message has been sent to me !</p>
+        <div class="success">
+            <img src="/icons/ok.svg" alt="Email sent">
+            <p>Your message has been sent to me !</p>
+        </div>
     {:else if state === FormState.SENDING}
-        <p>Sending...</p>
+        <LoadingSpinner message="Sending message" />
     {:else}
         <form on:submit|preventDefault={submit}>
             {#if state === FormState.ERROR}
@@ -98,5 +103,17 @@
     button {
         cursor: pointer;
         font-size: 1.25rem;
+    }
+
+    .success {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .success img {
+        width: 10rem;
+        height: 10rem;
     }
 </style>

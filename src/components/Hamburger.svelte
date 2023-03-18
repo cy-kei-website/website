@@ -16,7 +16,7 @@
         <img class="icon" src="/icons/hamburger-menu.svg" alt="Menu" />
     </button>
     <div class="slideover bg-very-light" class:open={open}>
-        <button class="close" on:click={() => open = false}>
+        <button class="close soft-button" on:click={() => open = false}>
             <img class="icon" src="/icons/close.svg" alt="Menu" />
         </button>
         <div class="mobile-nav">

@@ -2,6 +2,7 @@
     import { concerts } from "../stores/concerts";
     import { Status } from "../types/status";
     import ConcertsList from "./ConcertsList.svelte";
+    import LoadingSpinner from "./LoadingSpinner.svelte";
 
     export let mode: "upcoming" | "past" = "upcoming";
 
@@ -17,5 +18,5 @@
 {:else if $concerts.status === Status.FAILED}
     <p>An error occured while fetching the concerts</p>
 {:else if $concerts.status === Status.PENDING}
-    <p>Loading</p>
+    <LoadingSpinner message="Loading concerts" />
 {/if}
