@@ -2,7 +2,7 @@
     import { concerts } from "../stores/concerts";
     import { Status } from "../types/status";
     import ConcertsList from "./ConcertsList.svelte";
-    import LoadingSpinner from "./LoadingSpinner.svelte";
+    import LoadingSpinner from "./utils/LoadingSpinner.svelte";
 
     export let mode: "upcoming" | "past" = "upcoming";
 

@@ -46,6 +46,8 @@ export async function getPictures() {
     return getDocs(galleryCollection);
 }
 
+export const socialMediasCollection = collection(db, "socialMedias");
+
 export const storage = getStorage(app);
 
 const analytics = getAnalytics(app);

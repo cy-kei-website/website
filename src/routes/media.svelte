@@ -3,7 +3,7 @@
     import GalleryModal from "../components/GalleryModal.svelte";
     import { gallery, type GalleryPicture } from "../stores/gallery";
     import { Status } from "../types/status";
-    import LoadingSpinner from "../components/LoadingSpinner.svelte";
+    import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
 
     let modal: GalleryModal;
 

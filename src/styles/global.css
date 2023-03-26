@@ -144,6 +144,17 @@ input, textarea {
     height: 100%;
 }
 
+.toolbar-button {
+    display: block;
+    background: var(--color-primary);
+    padding: 0.25rem;
+    color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
 @keyframes title-appear {
     0% {
         transform: translateX(-1.5rem);

@@ -1,7 +1,7 @@
 <script lang="ts">
     import PageStructure from "../components/PageStructure.svelte";
     import emailjs from "@emailjs/browser";
-    import LoadingSpinner from "../components/LoadingSpinner.svelte";
+    import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
 
     enum FormState {
         NORMAL,

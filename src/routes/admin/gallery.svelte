@@ -16,7 +16,7 @@
         picturesRefs = (await getPictures()).docs.map((d) => d.ref);
     });
 
-    async function addConcert() {
+    async function addPicture() {
         if (!galleryCol) return;
 
         const docRef = await addDoc(galleryCol, {
@@ -49,7 +49,7 @@
     <h2>Edit Gallery</h2>
 
     <div class="toolbar">
-        <button on:click={addConcert}>Add concert</button>
+        <button on:click={addPicture}>Add picture</button>
         <button on:click={save}>Save</button>
     </div>
 

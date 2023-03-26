@@ -2,7 +2,7 @@
     import SocialLinks from "../components/SocialLinks.svelte";
     import SmartConcertList from "../components/SmartConcertList.svelte";
     import { bios } from "../stores/bios";
-    import LoadingSpinner from "../components/LoadingSpinner.svelte";
+    import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
     import { Status } from "../types/status";
 </script>
 

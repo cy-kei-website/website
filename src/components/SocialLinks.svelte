@@ -1,19 +1,29 @@
+<script lang="ts">
+    import { socialMedias } from "../stores/socialMedias";
+</script>
+
 <ul>
+    {#if $socialMedias.youtube.handle}
     <li>
-        <a href="https://www.youtube.com/user/cyprienkeiser" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.youtube.com/{$socialMedias.youtube.handle}" target="_blank" rel="noopener noreferrer">
             <img src="/icons/youtube.svg" alt="Youtube" class="icon" />
         </a>
     </li>
+    {/if}
+    {#if $socialMedias.facebook.handle}
     <li>
-        <a href="https://www.facebook.com/cyprien.keiser" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.facebook.com/{$socialMedias.facebook.handle}" target="_blank" rel="noopener noreferrer">
             <img src="/icons/facebook.svg" alt="Facebook" class="icon" />
         </a>
     </li>
-    <li>
-        <a href="https://www.instagram.com/cyprienkeiser/" target="_blank" rel="noopener noreferrer">
-            <img src="/icons/instagram.svg" alt="Instagram" class="icon" />
-        </a>
-    </li>
+    {/if}
+    {#if $socialMedias.instagram.handle}
+        <li>
+            <a href="https://www.instagram.com/{$socialMedias.instagram.handle}" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/instagram.svg" alt="Instagram" class="icon" />
+            </a>
+        </li>
+    {/if}
 </ul>
 
 <style>

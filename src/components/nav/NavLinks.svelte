@@ -1,5 +1,5 @@
 <script lang="ts">
-    import NavLink from "./NavLink.svelte";
+    import NavLink from "../utils/NavLink.svelte";
 
     export let vertical = false;
 </script>
