@@ -1,7 +1,8 @@
 <script lang="ts">
     import PageStructure from "../components/PageStructure.svelte";
-    import GalleryModal from "../components/GalleryModal.svelte";
+    import GalleryModal from "../components/modals/GalleryModal.svelte";
     import { gallery, type GalleryPicture } from "../stores/gallery";
+    import { videos, type Video } from "../stores/videos";
     import { Status } from "../types/status";
     import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
 
@@ -14,8 +15,21 @@
 
 <PageStructure title="Media" imgName="bio-extrapic.jpg" layout="content-only">
     <section>
-        <h2>Video</h2>
-        <iframe class="yt-video" width="560" height="315" src="https://www.youtube.com/embed/L-h1Q_FNMQc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <h2>Videos</h2>
+
+        {#if $gallery.status === Status.PENDING}
+            <LoadingSpinner message="Loading videos" />
+        {:else}
+            <div class="video-gallery">
+                {#each $videos.videos as video}
+                    <div>
+                        <iframe class="yt-video" width="560" height="315" src="https://www.youtube.com/embed/{video.youtubeHandle}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="video-title">{video.title}</div>
+                    </div>
+                {/each}
+            </div>
+            <GalleryModal bind:this={modal} />
+        {/if}
     </section>
     <section>
         <h2>Images</h2>
@@ -37,6 +51,26 @@
 </PageStructure>
 
 <style>
+
+    .video-gallery {
+        --player-max-size: 540px;
+        --player-width: min(90vw, var(--player-max-size));
+        --player-height: calc(var(--player-width) * 9 / 16 + 3rem);
+
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, var(--player-width));
+        grid-auto-rows: var(--player-height);
+        gap: 1rem;
+    }
+
+    .yt-video {
+        margin-bottom: 0.5rem;
+    }
+
+    .video-title {
+        text-align: center;
+    }
 
     .gallery {
         --thumb-max-size: 25rem;

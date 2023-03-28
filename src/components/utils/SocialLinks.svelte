@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { socialMedias } from "../stores/socialMedias";
+    import { socialMedias } from "../../stores/socialMedias";
 </script>
 
 <ul>

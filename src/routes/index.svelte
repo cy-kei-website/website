@@ -1,6 +1,6 @@
 <script>
-    import SocialLinks from "../components/SocialLinks.svelte";
-    import SmartConcertList from "../components/SmartConcertList.svelte";
+    import SocialLinks from "../components/utils/SocialLinks.svelte";
+    import SmartConcertList from "../components/concerts/SmartConcertList.svelte";
     import { bios } from "../stores/bios";
     import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
     import { Status } from "../types/status";
@@ -14,9 +14,9 @@
     <div id="home-bg" />
     <section class="splash">
         <div class="text">
-                <h1 class="name">Cyprien Keiser</h1>
-                <h2 class="instrument">Cellist</h2>
-                <SocialLinks />
+            <h1 class="name">Cyprien Keiser</h1>
+            <h2 class="instrument">Cellist</h2>
+            <SocialLinks />
         </div>
     </section>
 

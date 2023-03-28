@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Concert } from "../types/concert";
+    import type { Concert } from "../../types/concert";
     import { browser } from '$app/env';
     import { onMount } from "svelte";
 

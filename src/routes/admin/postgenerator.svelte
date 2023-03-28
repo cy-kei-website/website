@@ -376,7 +376,7 @@
         const selectedConcerts = concertSelector.getSelectedConcerts();
         selectedConcerts.forEach((concert: Concert) => {
             text += "\n";
-            text += `${concert.date.toLocaleDateString()} - ${concert.location}`;
+            text += `${concert.date.toLocaleDateString()} - ${concert.location}` + "\n";
             text += `${concert.description}`;
             text += "\n";
         });
