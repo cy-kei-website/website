@@ -1,5 +1,7 @@
 import { updateGallery } from "../../stores/gallery";
 import { updateVideos } from "../../stores/videos";
 
-updateGallery();
-updateVideos();
+export async function load() {
+    await updateGallery();
+    await updateVideos();
+}
