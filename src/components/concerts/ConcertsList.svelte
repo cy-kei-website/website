@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Concert } from "../../types/concert";
-    import { browser } from '$app/env';
+    import { browser } from '$app/environment';
     import { onMount } from "svelte";
 
     export let concertsList: Concert[];

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import PageStructure from "../components/PageStructure.svelte";
-    import GalleryModal from "../components/modals/GalleryModal.svelte";
-    import { gallery, type GalleryPicture } from "../stores/gallery";
-    import { videos, type Video } from "../stores/videos";
-    import { Status } from "../types/status";
-    import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
+    import PageStructure from "../../components/PageStructure.svelte";
+    import GalleryModal from "../../components/modals/GalleryModal.svelte";
+    import { gallery, type GalleryPicture } from "../../stores/gallery";
+    import { videos, type Video } from "../../stores/videos";
+    import { Status } from "../../types/status";
+    import LoadingSpinner from "../../components/utils/LoadingSpinner.svelte";
 
     let modal: GalleryModal;
 

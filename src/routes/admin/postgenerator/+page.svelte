@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { gallery } from "../../stores/gallery";
-    import { socialMedias } from "../../stores/socialMedias";
+    import { gallery } from "../../../stores/gallery";
+    import { socialMedias } from "../../../stores/socialMedias";
     import { onMount } from "svelte";
-    import TextModal from "../../components/admin/postGenerator/TextModal.svelte";
-    import ConcertSelector from "../../components/admin/postGenerator/ConcertSelector.svelte";
+    import TextModal from "../../../components/admin/postGenerator/TextModal.svelte";
+    import ConcertSelector from "../../../components/admin/postGenerator/ConcertSelector.svelte";
     import type { Concert } from "src/types/concert";
-    import FontSelector from "../../components/admin/postGenerator/FontSelector.svelte";
+    import FontSelector from "../../../components/admin/postGenerator/FontSelector.svelte";
 
     interface Vector2 {
         x: number;

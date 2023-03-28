@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import ConcertListEditor from "../../components/admin/ConcertListEditor.svelte";
+    import ConcertListEditor from "../../../components/admin/ConcertListEditor.svelte";
 
 </script>
 

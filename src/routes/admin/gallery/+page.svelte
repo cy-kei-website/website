@@ -2,7 +2,7 @@
 
     import { onMount } from "svelte";
     import { addDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
-    import GalleryPicture from "../../components/admin/GalleryPicture.svelte";
+    import GalleryPicture from "../../../components/admin/GalleryPicture.svelte";
     
     let galleryCol: CollectionReference | null = null;
 
@@ -11,7 +11,7 @@
     let singleEditors: GalleryPicture[] = [];
 
     onMount(async () => {
-        const { galleryCollection, getPictures }  = await import("../../firebase");
+        const { galleryCollection, getPictures }  = await import("../../../firebase");
         galleryCol = galleryCollection;
         picturesRefs = (await getPictures()).docs.map((d) => d.ref);
     });

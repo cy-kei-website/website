@@ -2,7 +2,7 @@
 
     import { onMount } from "svelte";
     import { doc, getDoc, updateDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
-    import LoadingSpinner from "../../components/utils/LoadingSpinner.svelte";
+    import LoadingSpinner from "../../../components/utils/LoadingSpinner.svelte";
     
     let biosCol: CollectionReference | null = null;
     let shortReference: DocumentReference | null = null;
@@ -23,7 +23,7 @@
     let fullSaving: boolean = false;
 
     onMount(async () => {
-        const { biosCollection }  = await import("../../firebase");
+        const { biosCollection }  = await import("../../../firebase");
         biosCol = biosCollection;
 
         shortReference = doc(biosCol, "short");

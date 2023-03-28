@@ -2,8 +2,8 @@
 
     import { onMount } from "svelte";
     import { addDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
-    import type { Video } from "../../stores/videos";
-    import VideoEditor from "../../components/admin/VideoEditor.svelte";
+    import type { Video } from "../../../stores/videos";
+    import VideoEditor from "../../../components/admin/VideoEditor.svelte";
     
     let videosCol: CollectionReference | null = null;
 
@@ -12,7 +12,7 @@
     let singleEditors: VideoEditor[] = [];
 
     onMount(async () => {
-        const { videosCollection, getVideos }  = await import("../../firebase");
+        const { videosCollection, getVideos }  = await import("../../../firebase");
         videosCol = videosCollection;
         videosRefs = (await getVideos()).docs.map((d) => d.ref);
     });

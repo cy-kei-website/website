@@ -2,7 +2,7 @@
 
     import { onMount } from "svelte";
     import { doc, getDoc, updateDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
-    import LoadingSpinner from "../../components/utils/LoadingSpinner.svelte";
+    import LoadingSpinner from "../../../components/utils/LoadingSpinner.svelte";
     
     let socialMediasCol: CollectionReference | null = null;
     let handlesReference: DocumentReference | null = null;
@@ -24,7 +24,7 @@
     let saving: boolean = false;
 
     onMount(async () => {
-        const { socialMediasCollection }  = await import("../../firebase");
+        const { socialMediasCollection }  = await import("../../../firebase");
         socialMediasCol = socialMediasCollection;
 
         handlesReference = doc(socialMediasCol, "handles");
