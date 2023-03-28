@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { GalleryPicture } from "../stores/gallery";
+    import Modal from "./Modal.svelte";
 
-    let dialog: HTMLDialogElement;
+    let modal: Modal;
 
     let picture: GalleryPicture = {
         copyright: "",
@@ -11,12 +12,8 @@
     };
 
     export function show(galleryPicture: GalleryPicture) {
-        dialog.showModal();
+        modal.show();
         picture = galleryPicture;
-    }
-
-    function close() {
-        dialog.close();
     }
 
     async function downloadPicture() {
@@ -31,74 +28,27 @@
 
         document.body.appendChild(a);
         a.click();
-        // a.remove();
+        a.remove();
     }
 
 </script>
 
-<dialog class="bg-mid-light" bind:this={dialog}>
-    <div class="toolbar">
-        <div></div>
-        
-        <!--
-        <button class="soft-button" on:click={downloadPicture}>
-            <img class="icon" src="/icons/download.svg" alt="Download" />
-        </button>
-        -->
-
-        <button class="soft-button" on:click={close}>
-            <img class="icon" src="/icons/close.svg" alt="Close" />
-        </button>
-    </div>
+<Modal bind:this={modal}>
+    <button class="soft-button" on:click={downloadPicture} slot="left-button">
+        <img class="icon" src="/icons/download.svg" alt="Download" />
+    </button>
 
     <img src={picture.url} alt={picture.copyright} class="image" />
     <div class="copyright">
         &#169; { picture.copyright }
     </div>
-</dialog>
+</Modal>
 
 <style>
-
-    dialog {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: none;
-        padding: 0.25rem;
-        margin: 0;
-        border-radius: 0.5rem;
-        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-
-        animation: dialog-appear 0.2s ease-out;
-    }
-    
-    dialog::backdrop {
-        background-color: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(5px);
-    }
-
-    dialog[open]::backdrop {
-        animation: dialog-appear 0.2s ease-out;
-    }
-    
-    .toolbar {
-        padding: 0.25rem;
-        display: flex;
-        justify-content: space-between;
-    }
 
     .image {
         max-width: 90vw;
         max-height: 70vh;
-    }
-
-    @keyframes dialog-appear {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
     }
 
 </style>

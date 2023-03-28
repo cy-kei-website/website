@@ -1,8 +1,10 @@
 <script lang="ts">
     export let title: string = "";
     export let bgImgName: string = "home_bg.jpg";
-    export let bgPosition: string = "70% top";
-    export let bgPositionMobile: string = "70% top";
+    export let bgPositionX: string = "70%";
+    export let bgPositionY: string = "top";
+    export let bgPositionMobileX: string = "70%";
+    export let bgPositionMobileY: string = "top";
     export let imgName: string = "";
     export let imgAlt: string = "Cyprien Keiser";
     export let layout: "image-left" | "image-right" | "content-only" = "image-left";
@@ -12,7 +14,7 @@
     <title>Cyprien Keiser - {title}</title>
 </svelte:head>
 
-<main style="background-image: url(/imgs/{bgImgName}); --bg-pos: {bgPosition}; --bg-pos-mobile: {bgPositionMobile};">
+<main style="background-image: url(/imgs/{bgImgName}); --bg-pos-x: {bgPositionX}; --bg-pos-y: {bgPositionY}; --bg-pos-mobile-x: {bgPositionMobileX}; --bg-pos-mobile-y: {bgPositionMobileY};">
     <h1>{ title }</h1>
     <div class="page-content backdrop-blur-very-strong bg-very-light">
         <div class="grid {layout}">
@@ -35,7 +37,9 @@
         background-attachment: fixed;
 
         background-size: cover;
-        background-position: var(--bg-pos);
+        background-position: var(--bg-pos-x) var(--bg-pos-y);
+        background-position-x: var(--bg-pos-x);
+        background-position-y: var(--bg-pos-y);
     }
 
     .page-content {
@@ -67,7 +71,9 @@
 
     @media screen and (max-width: 35rem) {
         main {
-            background-position: var(--bg-pos-mobile);
+            background-position: var(--bg-pos-mobile-x) var(--bg-pos-mobile-y);
+            background-position-x: var(--bg-pos-mobile-x);
+            background-position-y: var(--bg-pos-mobile-y);
         }
         .grid.image-left, .grid.image-right {
             grid-template-columns: 1fr;

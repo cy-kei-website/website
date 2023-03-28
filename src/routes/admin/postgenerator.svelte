@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { gallery, type GalleryPicture } from "../../stores/gallery";
+    import { gallery } from "../../stores/gallery";
     import { socialMedias } from "../../stores/socialMedias";
     import { onMount } from "svelte";
+    import TextModal from "../../components/admin/postGenerator/TextModal.svelte";
     import ConcertSelector from "../../components/admin/postGenerator/ConcertSelector.svelte";
     import type { Concert } from "src/types/concert";
     import FontSelector from "../../components/admin/postGenerator/FontSelector.svelte";
@@ -40,6 +41,8 @@
 
     let concertSelector: ConcertSelector;
 
+    let textModal: TextModal;
+
     onMount(() => {
         context = canvas.getContext("2d") as CanvasRenderingContext2D;
 
@@ -47,10 +50,13 @@
     });
 
     let zoomFactor: number = 1;
+    let gridEnabled: boolean = false;
+    let gridDivisions: Vector2 = makeVector2(5, 5);
 
     let title: string = "";
 
     const bgImage = new Image();
+    bgImage.crossOrigin = "anonymous";
     bgImage.onload = () => {
         draw();
     };
@@ -188,9 +194,41 @@
         } else {
             theme = Theme.LIGHT;
         }
+
+        draw();
     }
 
-    // Returns bounding box of the concert
+    function snapToGrid(pos: Vector2): Vector2 {
+        const cellWidth = imageSize.x / gridDivisions.x;
+        const cellHeight = imageSize.y / gridDivisions.y;
+
+        return {
+            x: Math.round(cellWidth * Math.round(pos.x / cellWidth)),
+            y: Math.round(cellHeight * Math.round(pos.y / cellHeight))
+        };
+    }
+
+    function snapTitleToGrid() {
+        titlePosition = snapToGrid(titlePosition);
+        draw();
+    }
+
+    function snapConcertsToGrid() {
+        concertListPosition = snapToGrid(concertListPosition);
+        draw();
+    }
+
+    function snapSocialMediasToGrid() {
+        socialMediaPosition = snapToGrid(socialMediaPosition);
+        draw();
+    }
+
+    function snapWebsiteToGrid() {
+        websitePosition = snapToGrid(websitePosition);
+        draw();
+    }
+
+    // Returns size of the concert
     function renderConcert(concert: Concert, x: number, y: number): Vector2 {
         context.font = `${concertDateFontSize}px "${concertFontFamily}"`;
         context.fillText(concert.date.toLocaleDateString(), x, y + concertDateFontSize);
@@ -237,6 +275,27 @@
         for (const pair of pairs) {
             renderSocial(pair.icon, pair.handle, x, socialMediaPosition.y);
             x += socialMediaGap;
+        }
+    }
+
+    function drawGrid() {
+        context.strokeStyle = "1px black";
+
+        const stepX = imageSize.x / gridDivisions.x;
+        const stepY = imageSize.y / gridDivisions.y;
+
+        for (let i = 1; i < gridDivisions.x; i++) {
+            context.beginPath();
+            context.moveTo(i * stepX, 0);
+            context.lineTo(i * stepX, imageSize.y);
+            context.stroke();
+        }
+
+        for (let i = 1; i < gridDivisions.y; i++) {
+            context.beginPath();
+            context.moveTo(0, i * stepY);
+            context.lineTo(imageSize.x, i * stepY);
+            context.stroke();
         }
     }
 
@@ -287,8 +346,8 @@
             renderSocialMedias();
         }
 
+        context.textAlign = "left";
         if (enableWebsite) {
-            context.textAlign = "left";
             context.font = `${websiteFontSize}px "${websiteFontFamily}"`;
             context.fillText("cyprien-keiser.com", websitePosition.x, websitePosition.y);
         }
@@ -297,6 +356,35 @@
         const copyrightText = `© ${imageCopyright}`;
         const x = imageSize.x - context.measureText(copyrightText).width - 10;
         context.fillText(`© ${imageCopyright}`, x, imageSize.y - 10);
+
+        if (gridEnabled) {
+            drawGrid();
+        }
+    }
+
+    function download() {
+        const a: HTMLAnchorElement = document.createElement('a');
+        a.setAttribute('download', `${title}.png`);
+        a.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+        a.click();
+    }
+
+    function generatePostText() {
+        let text = `${title}`;
+        text += "\n \n";
+        
+        const selectedConcerts = concertSelector.getSelectedConcerts();
+        selectedConcerts.forEach((concert: Concert) => {
+            text += "\n";
+            text += `${concert.date.toLocaleDateString()} - ${concert.location}`;
+            text += `${concert.description}`;
+            text += "\n";
+        });
+
+        text += "\ncyprien-keiser.com\n";
+        text += `© ${imageCopyright}`;;
+
+        textModal.show(text);
     }
 
 </script>
@@ -363,11 +451,9 @@
                 </label>
             </div>
 
-            <!--
             {#if bgImage.src}
                 <button class="toolbar-button" on:click={autoChooseTheme}>Auto-choose</button>
             {/if}
-            -->
         </fieldset>
 
         <fieldset>
@@ -429,6 +515,10 @@
                 </div>
             </div>
 
+            {#if gridEnabled}
+                <button class="toolbar-button" on:click={snapTitleToGrid}>Snap to grid</button>
+            {/if}
+
             <FontSelector bind:font={titleFontFamily} on:change={draw} />
             <label for="title-font-size">Font size</label>
             <input type="number" name="title-font-size" id="title-font-size" step="1" min="0" max="250" bind:value={titleFontSize} on:input={draw} />
@@ -458,6 +548,11 @@
                     <input type="number" name="concerts-offset-y" id="concerts-offset-y" step="1" min="0" max="10000" bind:value={concertListPosition.y} on:input={draw} />
                 </div>
             </div>
+
+            {#if gridEnabled}
+                <button class="toolbar-button" on:click={snapConcertsToGrid}>Snap to grid</button>
+            {/if}
+
             <label for="concert-date-location-gap">Gap between date and location</label>
             <input type="number" name="concert-date-location-gap" id="concert-date-location-gap" step="1" min="0" max="100" bind:value={concertDateLocationGap} on:input={draw} />
             <label for="concerts-gap">Gap between concerts</label>
@@ -500,6 +595,11 @@
                         <input type="number" name="social-offset-y" id="social-offset-y" step="1" min="0" max="10000" bind:value={socialMediaPosition.y} on:input={draw} />
                     </div>
                 </div>
+
+                {#if gridEnabled}
+                    <button class="toolbar-button" on:click={snapSocialMediasToGrid}>Snap to grid</button>
+                {/if}
+                
                 <label for="social-media-gap">Gap between social medias</label>
                 <input type="number" name="social-media-gap" id="social-media-gap" step="1" min="0" max="1000" bind:value={socialMediaGap} on:input={draw} />
                 <label for="social-media-logo-size">Logo size</label>
@@ -532,6 +632,11 @@
                         <input type="number" name="website-offset-y" id="website-offset-y" step="1" min="0" max="10000" bind:value={websitePosition.y} on:input={draw} />
                     </div>
                 </div>
+
+                {#if gridEnabled}
+                    <button class="toolbar-button" on:click={snapWebsiteToGrid}>Snap to grid</button>
+                {/if}
+
                 <FontSelector bind:font={websiteFontFamily} on:change={draw} />
                 <label for="website-font-size">Font size</label>
                 <input type="number" name="website-font-size" id="website-font-size" step="1" min="0" max="250" bind:value={websiteFontSize} on:input={draw} />
@@ -548,8 +653,34 @@
     
     <div class="center">
         <div class="toolbar-top">
-            <label for="viewport-zoom">Zoom</label>
-            <input type="number" name="viewport-zoom" id="viewport-zoom" step="0.025" min="0.1" max="10" bind:value={zoomFactor} />
+            <div class="sub-toolbar">
+                <div>
+                    <label for="viewport-zoom">Zoom</label>
+                    <input type="number" name="viewport-zoom" id="viewport-zoom" step="0.025" min="0.1" max="10" bind:value={zoomFactor} />
+                </div>
+                
+                <label for="enable-grid" class="checkbox">
+                    <input type="checkbox" name="enable-grid" id="enable-grid" bind:checked={gridEnabled} on:change={draw} />
+                    Enable grid
+                </label>
+    
+                {#if gridEnabled}
+                    <div>
+                        <label for="grid-divisions-x">Divisions X</label>
+                        <input type="number" name="grid-divisions-x" id="grid-divisions-x" step="1" min="0" max="100" bind:value={gridDivisions.x} on:input={draw} />
+                    </div>
+                    <div>
+                        <label for="grid-divisions-y">Divisions Y</label>
+                        <input type="number" name="grid-divisions-y" id="grid-divisions-y" step="1" min="0" max="100" bind:value={gridDivisions.y} on:input={draw} />
+                    </div>
+                {/if}
+            </div>
+
+            <div class="sub-toolbar">
+                <button class="toolbar-button" on:click={generatePostText}>Get post text</button>
+                <button class="toolbar-button" on:click={download}>Download</button>
+                <TextModal bind:this={textModal} />
+            </div>
         </div>
         <div class="preview">
             <canvas class="canvas" style="--zoom: {zoomFactor}" bind:this={canvas}></canvas>
@@ -647,9 +778,16 @@
     }
 
     .toolbar-top {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 1rem;
         padding: 0.5rem 0;
         box-shadow: 0 0.5rem 0.5rem -0.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    .sub-toolbar {
+        display: flex;
+        gap: 1rem;
     }
 
     .images-list {

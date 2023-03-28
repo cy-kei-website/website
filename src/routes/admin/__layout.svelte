@@ -36,4 +36,9 @@
         align-items: center;
         justify-content: center;
     }
+
+    nav {
+        display: flex;
+        gap: 1rem;
+    }
 </style>
