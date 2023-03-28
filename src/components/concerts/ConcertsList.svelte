@@ -17,6 +17,7 @@
 
     onMount(() => {
         if (browser) {
+            autoCompact = window.matchMedia("(max-width: 50rem)").matches;
             window.matchMedia("(max-width: 50rem)").addEventListener("change", (ev) => {
                 autoCompact = ev.matches;
             });
