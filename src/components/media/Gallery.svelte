@@ -38,8 +38,8 @@
 
     .gallery {
         --thumb-max-size: 25rem;
-        --cell-width: var(var(--thumb-max-size));
-        --cell-height: var(var(--thumb-max-size));
+        --cell-width: var(--thumb-max-size);
+        --cell-height: var(--thumb-max-size);
     }
 
     .gallery-item {
