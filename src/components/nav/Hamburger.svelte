@@ -1,6 +1,9 @@
 <script lang="ts">
     import NavLinks from "./NavLinks.svelte";
+    import type { NavLinksParams } from "./NavLinks.svelte";
     import { navigating } from "$app/stores";
+
+    export let navParams: NavLinksParams;
 
     let open = false;
 
@@ -20,7 +23,7 @@
             <img class="icon" src="/icons/close.svg" alt="Menu" />
         </button>
         <div class="mobile-nav">
-            <NavLinks vertical={true} />
+            <NavLinks vertical={true} params={navParams} />
         </div>
     </div>
     <div class="backdrop" class:open={open} />

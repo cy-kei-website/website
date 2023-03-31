@@ -52,7 +52,7 @@
     $: modified = hash !== (location + description + dateString + url);
 </script>
 
-<div class="container" class:modified={modified}>
+<div class="editor-container" class:modified={modified}>
     <label for="{idBase}-date" class="date-label">Date</label>
     <input type="date" id="{idBase}-date" class="date-field" bind:value={dateString} />
     <label for="{idBase}-location" class="location-label">Location</label>
@@ -70,14 +70,8 @@
 </div>
 
 <style>
-    .modified {
-        outline: 1px solid red;
-    }
 
-    .container {
-        padding: 0.5rem;
-        display: grid;
-
+.editor-container {
         grid-template-areas:
             "date-label location-label delete-button"
             "date-field location-field delete-button"
@@ -88,15 +82,6 @@
         
         grid-template-columns: 1fr 2fr 10rem;
         grid-template-rows: min-content min-content min-content 8rem min-content min-content;
-        gap: 0.5rem 1rem;
-
-        transition: 0.2s;
-
-        margin-bottom: 1rem;
-        border-left: 0.5rem solid var(--color-primary-light);
-    }
-    .container:hover {
-        background-color: rgb(0, 0, 0, 0.08);
     }
 
     input, textarea {
@@ -134,12 +119,5 @@
 
     .url-field {
         grid-area: url-field;
-    }
-
-    .delete-button {
-        grid-area: delete-button;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
     }
 </style>

@@ -1,9 +1,28 @@
-<script>
-    import SocialLinks from "../components/utils/SocialLinks.svelte";
-    import SmartConcertList from "../components/concerts/SmartConcertList.svelte";
-    import { bios } from "../stores/bios";
-    import LoadingSpinner from "../components/utils/LoadingSpinner.svelte";
-    import { Status } from "../types/status";
+<script lang="ts">
+    import SocialLinks from "../utils/SocialLinks.svelte";
+    import SmartConcertList from "../concerts/SmartConcertList.svelte";
+    import { bios } from "../../stores/bios";
+    import LoadingSpinner from "../utils/LoadingSpinner.svelte";
+    import { Status } from "../../types/status";
+    import { browser } from "$app/environment";
+
+    export let instrument: string = "Cellist";
+    export let aboutTitle: string = "About Cyprien";
+    export let language: string = "en";
+    export let bioLoadingText: string = "Loading bio";
+    export let seeBioText: string = "See Biography";
+    export let listenTitle: string = "Listen";
+    export let seeMedias: string = "See Medias";
+    export let concertsTitle: string = "Concerts";
+    export let seeAllConcertsText: string = "See All Concerts";
+    export let seeGalleryText: string = "See Gallery";
+
+    if (browser) {
+        setTimeout(() => {
+            document.body.classList.add("no-home-animation");
+        }, 2000);
+    }
+    
 </script>
 
 <svelte:head>
@@ -15,43 +34,42 @@
     <section class="splash">
         <div class="text">
             <h1 class="name">Cyprien Keiser</h1>
-            <h2 class="instrument">Cellist</h2>
+            <h2 class="instrument">{instrument}</h2>
             <SocialLinks />
         </div>
     </section>
 
     <div class="grid bg-light">
         <section class="mini-bio backdrop-blur-very-strong bg-very-light">
-            <h3>About Cyprien</h3>
-            <!-- TODO : make more SSR-friendly -->
-            {#if $bios.status === Status.PENDING}
-                <LoadingSpinner message="Loading bio" />
+            <h3>{ aboutTitle }</h3>
+
+            {#if $bios[language].status === Status.PENDING}
+                <LoadingSpinner message={bioLoadingText} />
             {:else}
-                <p class="line-breaks">{ $bios.short.en }</p>
+                <p class="line-breaks">{ $bios[language].biography.short }</p>
             {/if}
             
-            <a href="/bio" class="cta">See Biography</a>
+            <a href="{language}/bio" class="cta">{ seeBioText }</a>
         </section>
         
         <section class="main-media backdrop-blur-very-strong bg-very-light">
-            <h3>Listen</h3>
+            <h3>{ listenTitle }</h3>
             <iframe class="yt-video" width="560" height="315" src="https://www.youtube.com/embed/L-h1Q_FNMQc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <a href="/media" class="cta-inverted">See Medias</a>
+            <a href="{language}/media" class="cta-inverted">{ seeMedias }</a>
         </section>
     
         <section class="concerts backdrop-blur-very-strong bg-very-light">
-            <h3>Concerts</h3>
+            <h3>{ concertsTitle }</h3>
             <SmartConcertList mode="upcoming" maxCount={5} />
-            <a href="/concerts" class="cta">See All Concerts</a>
+            <a href="{language}/concerts" class="cta">{ seeAllConcertsText }</a>
         </section>
         
         <section class="gallery backdrop-blur-very-strong bg-very-light">
             <div class="gallery-backdrop">
-                <a href="/media" class="cta-inverted">See Gallery</a>
+                <a href="{language}/media" class="cta-inverted">{ seeGalleryText }</a>
             </div>
         </section>
     </div>
-
 </div>
 
 <style>
@@ -69,11 +87,24 @@
         background-image: url("/imgs/home_bg.jpg");
         background-size: cover;
         background-position: 70%;
+
+        opacity: 0;
+    }
+    
+    :global(.animated) #home-bg {
+        animation: zoom-out 0.75s ease-out forwards;
+    }
+
+    :global(.animated.no-home-animation) #home-bg {
+        opacity: 1;
+        animation: none;
     }
 
     section {
         padding: min(2rem, 5vw);
         box-sizing: border-box;
+
+        transition: 0.2s ease;
     }
 
     .splash {
@@ -89,8 +120,14 @@
         color: white;
 
         opacity: 0;
+    }
+    
+    .animated .splash .text {
+        animation: title-appear 0.6s ease-out 0.6s forwards;
+    }
 
-        animation: title-appear 0.6s ease-out 0.2s forwards;
+    :global(.animated.no-home-animation) .splash .text {
+        animation-delay: 0.2s;
     }
 
     .name {
@@ -98,11 +135,13 @@
         text-shadow: 0 0 3rem rgba(0, 0, 0, 1), 0 0 1rem rgba(0, 0, 0, 1);
         margin-bottom: 0.5rem;
     }
+
     .instrument {
         font-size: min(3rem, 12vw);
         text-shadow: 0 0 3rem rgba(0, 0, 0, 1), 0 0 1rem rgba(0, 0, 0, 1);
         margin-top: 1rem;
     }
+    
     @media screen and (max-width: 55rem) {
         .splash .text {
             top: unset;
@@ -124,8 +163,14 @@
         box-shadow: 0 -4rem 4rem 2rem rgba(255, 255, 255, 0.4);
 
         opacity: 0;
-
-        animation: bottom-appear 0.5s ease-out 0.5s forwards;
+    }
+    
+    .animated #home-wrapper .grid {
+        animation: bottom-appear 0.5s ease-out 0.8s forwards;
+    }
+    
+    :global(.animated.no-home-animation) #home-wrapper .grid {
+        animation-delay: 0.4s;
     }
     
     @media screen and (max-width: 50rem) {
@@ -133,6 +178,15 @@
             display: block;
             padding: 0;
         }
+    }
+
+    .grid:has(section:hover) > section:not(:hover) {
+        opacity: 0.8;
+        transform: scale(0.985);
+    }
+
+    .grid section:hover {
+        box-shadow: 0 0 2rem rgba(0, 0, 0, 0.25);
     }
 
     h3 {

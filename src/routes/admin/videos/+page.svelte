@@ -4,12 +4,15 @@
     import { addDoc, type CollectionReference, type DocumentReference } from "firebase/firestore";
     import type { Video } from "../../../stores/videos";
     import VideoEditor from "../../../components/admin/VideoEditor.svelte";
+    import LoadingSpinner from "../../../components/utils/LoadingSpinner.svelte";
     
     let videosCol: CollectionReference | null = null;
 
     let videosRefs: DocumentReference[] = [];
 
     let singleEditors: VideoEditor[] = [];
+
+    let saving: boolean = false;
 
     onMount(async () => {
         const { videosCollection, getVideos }  = await import("../../../firebase");
@@ -30,13 +33,17 @@
     }
 
     async function save() {
+        saving = true;
+
         const promises = [];
 
         for (const editor of singleEditors) {
             promises.push(editor.save());
         }
 
-        return Promise.all(promises);
+        await Promise.all(promises);
+
+        saving = false;
     }
 
     function onDelete(event: any) {
@@ -48,18 +55,21 @@
 <div>
     <h2>Edit Videos</h2>
 
-    <div class="toolbar">
-        <button on:click={addVideo}>Add video</button>
-        <button on:click={save}>Save</button>
+    <div class="editor-wrapper">
+        <div class="toolbar">
+            <button on:click={addVideo}>Add video</button>
+            <button on:click={save}>Save</button>
+        </div>
+    
+        
+        {#if saving}
+            <div class="saving-backdrop">
+                <LoadingSpinner message="Saving videos..." />
+            </div>
+        {:else}
+            {#each videosRefs as picture, i}
+                <VideoEditor videoRef={picture} bind:this={singleEditors[i]} on:deleted={onDelete} />
+            {/each}
+        {/if}
     </div>
-
-    {#each videosRefs as picture, i}
-        <VideoEditor videoRef={picture} bind:this={singleEditors[i]} on:deleted={onDelete} />
-    {/each}
 </div>
-
-<style>
-    button {
-        margin-block: 0.5rem;
-    }
-</style>

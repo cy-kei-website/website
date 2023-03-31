@@ -116,7 +116,7 @@
     $: modified = hash !== (url + thumbnailUrl + copyright);
 </script>
 
-<div class="container" class:modified={modified}>
+<div class="editor-container" class:modified={modified}>
     <!-- svelte-ignore a11y-img-redundant-alt -->
     <img src={thumbnailUrl} alt="Image thumbnail" class="thumb-img" />
 
@@ -162,35 +162,13 @@
 </div>
 
 <style>
-    .modified {
-        outline: 1px solid red;
-    }
-
-    .container {
-        padding: 0.5rem;
-        display: grid;
-
+    .editor-container {
         grid-template-areas:
             "thumb-img thumb-url url delete-button"
             "thumb-img copyright uploaded delete-button";
         
         grid-template-columns: 200px 1fr 1fr 10rem;
         grid-template-rows: min-content min-content;
-        gap: 0.5rem 1rem;
-
-        transition: 0.2s;
-
-        margin-bottom: 1rem;
-        border-left: 0.5rem solid var(--color-primary-light);
-    }
-    .container:hover {
-        background-color: rgb(0, 0, 0, 0.08);
-    }
-
-    input {
-        display: block;
-        font: inherit;
-        width: 100%;
     }
 
     .custom-file-upload {
@@ -226,13 +204,6 @@
 
     .uploaded {
         grid-area: uploaded;
-    }
-
-    .delete-button {
-        grid-area: delete-button;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
     }
 
     .info {

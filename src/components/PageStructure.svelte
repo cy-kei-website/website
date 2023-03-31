@@ -45,8 +45,12 @@
     .page-content {
         padding: 1rem;
         box-shadow: 0 -7rem 3rem 2rem rgba(255, 255, 255, 0.5);
-        
-        animation: content-appear 0.5s ease-out;
+
+        opacity: 0;
+    }
+    
+    :global(.animated) .page-content {
+        animation: content-appear 0.5s ease-out forwards;
     }
 
     .grid {
@@ -102,7 +106,9 @@
         margin-left: 5vw;
 
         opacity: 0;
-
+    }
+    
+    :global(.animated) h1 {
         animation: title-appear 0.6s ease-out 0.2s forwards;
     }
 </style>

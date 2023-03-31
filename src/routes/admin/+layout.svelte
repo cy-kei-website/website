@@ -1,13 +1,23 @@
 <script lang="ts">
-    import { adminUser } from "../../firebase/stores";
+    import { onMount } from 'svelte';
+    import Nav from '../../components/nav/Nav.svelte';
+    import SocialLinks from "../../components/utils/SocialLinks.svelte";
     import LoginForm from "../../components/admin/LoginForm.svelte";
     import PageStructure from "../../components/PageStructure.svelte";
     import NavLink from "../../components/utils/NavLink.svelte";
+    import { adminUser } from "../../firebase/stores";
+    import "../../styles/admin.css";
+    import "../../styles/global.css";
 
     $: title = $adminUser ? `Admin (${$adminUser.email})` : "Admin (login)";
 
+    onMount(() => {
+        document.body.classList.add("animated"); // Prevents animation flashing with SSR
+    });
+
 </script>
 
+<Nav />
 <PageStructure layout="content-only" title={title}>
     {#if $adminUser}
         <div>
@@ -24,11 +34,15 @@
             <slot />
         </div>
     {:else}
-        <div class="center">
-            <LoginForm />
-        </div>
+    <div class="center">
+        <LoginForm />
+    </div>
     {/if}
 </PageStructure>
+<footer>
+    Cyprien Keiser
+    <SocialLinks />
+</footer>
 
 <style>
     .center {

@@ -1,7 +1,13 @@
 <script lang="ts">
-    import PageStructure from "../../components/PageStructure.svelte";
     import emailjs from "@emailjs/browser";
     import LoadingSpinner from "../../components/utils/LoadingSpinner.svelte";
+
+    export let okMessage: string = "Your message has been sent successfully";
+    export let errorMessage: string = "Your message has been sent successfully";
+    export let nameFieldLabel: string = "Your name";
+    export let emailFieldLabel: string = "Your email";
+    export let messageFieldLabel: string = "Message";
+    export let sendButtonText: string = "Send";
 
     enum FormState {
         NORMAL,
@@ -28,38 +34,34 @@
     }
 </script>
 
-<PageStructure title="Contact" imgName="contact-extrapic.jpg">
-    <h2>Send me a message</h2>
-
-    {#if state === FormState.SUCCESS}
-        <div class="success">
-            <img src="/icons/ok.svg" alt="Email sent">
-            <p>Your message has been sent to me !</p>
+{#if state === FormState.SUCCESS}
+    <div class="success">
+        <img src="/icons/ok.svg" alt="Email sent">
+        <p>{ okMessage }</p>
+    </div>
+{:else if state === FormState.SENDING}
+    <LoadingSpinner message="Sending message" />
+{:else}
+    <form on:submit|preventDefault={submit}>
+        {#if state === FormState.ERROR}
+            <p class="error">{ errorMessage }</p>
+        {/if}
+        <div class="form-group">
+            <label for="name">{ nameFieldLabel }</label>
+            <input type="text" id="name" name="from_name" placeholder=" " />
         </div>
-    {:else if state === FormState.SENDING}
-        <LoadingSpinner message="Sending message" />
-    {:else}
-        <form on:submit|preventDefault={submit}>
-            {#if state === FormState.ERROR}
-                <p class="error">An error has occured, please try again</p>
-            {/if}
-            <div class="form-group">
-                <label for="name">Your name</label>
-                <input type="text" id="name" name="from_name" placeholder=" " />
-            </div>
-            <div class="form-group">
-                <label for="email">Your email address</label>
-                <input type="email" id="email" name="from_email" placeholder=" " />
-            </div>
-            <div class="form-group">
-                <label for="message">Your message</label>
-                <textarea id="message" name="message" rows="10" />
-            </div>
+        <div class="form-group">
+            <label for="email">{ emailFieldLabel }</label>
+            <input type="email" id="email" name="from_email" placeholder=" " />
+        </div>
+        <div class="form-group">
+            <label for="message">{ messageFieldLabel }</label>
+            <textarea id="message" name="message" rows="10" />
+        </div>
 
-            <button class="cta-inverted">Send</button>
-        </form>
-    {/if}
-</PageStructure>
+        <button class="cta-inverted">{ sendButtonText }</button>
+    </form>
+{/if}
 
 <style>
     .form-group {
@@ -79,21 +81,14 @@
         margin-top: 0.1rem;
         font-size: 1.25rem;
         padding: 0.4rem;
-        border: none;
         box-shadow: none;
+        border: none;
         border-radius: 0.25rem;
-        width: 100%;
-        box-sizing: border-box;
     }
     
     input:focus, textarea:focus {
-        border: none;
         box-shadow: 0 0.25rem 0.5rem 0.25rem rgba(0, 0, 0, 0.1);
         outline: none;
-    }
-
-    textarea {
-        resize: vertical;
     }
 
     .error {

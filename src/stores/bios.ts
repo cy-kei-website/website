@@ -1,73 +1,76 @@
 import { Status } from "../types/status";
 import { writable } from "svelte/store";
 
+export interface Biography {
+    short: string;
+    full: string;
+}
+
+// short["en"] ; short["fr"] ; short["de"] ...
 export interface BioFetchResult {
-    short: {
-        en: string;
-    },
-    full: {
-        en: string;
-    }
+    biography: Biography;
     status: Status;
 }
 
-export const bios = writable<BioFetchResult>({
-    short: {
-        en: ""
-    },
-    full: {
-        en: ""
-    },
-    status: Status.PENDING
-});
+// Key is language code (i.e. "en", "fr", "de")
+export type MultilingualBioFetchResult = { [key: string]: BioFetchResult };
 
-async function getShort() {
-    try {
-        const res = await fetch("https://firestore.googleapis.com/v1/projects/cyprien-keiser/databases/(default)/documents/bios/short");
-        const json = await res.json();
+export const bios = writable<MultilingualBioFetchResult>({});
 
-        return {
-            en: json.fields.en.stringValue
+interface RawBio {
+    name: string;
+    fields: {
+        short: {
+            stringValue: string;
+        },
+        full: {
+            stringValue: string;
         }
-    } catch (error) {
-        throw new Error("Error while fetching short bios");
     }
 }
 
-async function getFull() {
-    try {
-        const res = await fetch("https://firestore.googleapis.com/v1/projects/cyprien-keiser/databases/(default)/documents/bios/full");
-        const json = await res.json();
-
+export async function updateBio(lang: string = "en") {
+    bios.update((bioFetches: MultilingualBioFetchResult): MultilingualBioFetchResult => {
         return {
-            en: json.fields.en.stringValue
-        }
-    } catch (error) {
-        throw new Error("Error while fetching short bios");
-    }
-}
+            ...bioFetches,
+            [lang]: {
+                biography: {
+                    short: "",
+                    full: "",
+                },
+                status: Status.PENDING
+            }
+        };
+    });
 
-export async function updateBios() {
     try {
-        const responses = await Promise.all([getShort(), getFull()]);
-        bios.set({
-            short: {
-                ...responses[0]
-            },
-            full: {
-                ...responses[1]
-            },
-            status: Status.OK
+        const res = await fetch(`https://firestore.googleapis.com/v1/projects/cyprien-keiser/databases/(default)/documents/bios/${lang}`);
+        const json = await res.json() as RawBio;
+        
+        bios.update((bioFetches: MultilingualBioFetchResult): MultilingualBioFetchResult => {
+            return {
+                ...bioFetches,
+                [lang]: {
+                    biography: {
+                        short: json.fields.short.stringValue,
+                        full: json.fields.full.stringValue,
+                    },
+                    status: Status.OK
+                }
+            };
         });
     } catch (error) {
-        bios.set({
-            short: {
-                en: ""
-            },
-            full: {
-                en: ""
-            },
-            status: Status.FAILED
+        bios.update((bioFetches: MultilingualBioFetchResult): MultilingualBioFetchResult => {
+            return {
+                ...bioFetches,
+                [lang]: {
+                    biography: {
+                        short: "",
+                        full: "",
+                    },
+                    status: Status.FAILED
+                }
+            };
         });
     }
 }

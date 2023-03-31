@@ -72,7 +72,7 @@
     }
 </script>
 
-<div class="toolbar">
+<div class="mini-toolbar">
     <button class="toolbar-button" on:click={autoSelectNextN}>Next N</button>
     <button class="toolbar-button" on:click={autoSelectThisMonth}>This month</button>
     <button class="toolbar-button" on:click={autoSelectNextMonth}>Next month</button>
@@ -80,6 +80,7 @@
 </div>
 <ul class="selector">
     {#each $concerts.upcoming as concert, i}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <li class:selected={selection[i]} on:click={() => { toggleSelection(i); }}>
             { concert.date.toLocaleDateString() } <br />
             {concert.location}
@@ -89,7 +90,7 @@
 
 <style>
 
-    .toolbar {
+    .mini-toolbar {
         display: flex;
         flex-wrap: wrap;
         gap: 0.25rem;

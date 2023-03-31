@@ -1,17 +1,27 @@
-<script>
+<script lang="ts">
     import NavLinks from "./NavLinks.svelte";
+    import type { NavLinksParams } from "./NavLinks.svelte";
     import Hamburger from "./Hamburger.svelte";
+
+    export let navParams: NavLinksParams = {
+        langURL: "en",
+        homeText: "Home",
+        bioText: "Bio",
+        concertsText: "Concerts",
+        mediaText: "Media",
+        contactText: "Contact"
+    };
 </script>
 
 <nav id="nav-wrapper" class="backdrop-blur-strong">
     <div class="logo">Cyprien Keiser</div>
 
     <div class="links">
-        <NavLinks />
+        <NavLinks params={navParams} />
     </div>
 
     <div class="hamburger">
-        <Hamburger />
+        <Hamburger navParams={navParams} />
     </div>
 </nav>
 
@@ -29,7 +39,11 @@
         justify-content: space-between;
         align-items: center;
 
-        animation: content-appear 0.5s ease-out;
+        opacity: 0;
+    }
+    
+    :global(.animated) #nav-wrapper {        
+        animation: top-appear 0.5s ease-out 0.5s forwards;
     }
 
     .logo {

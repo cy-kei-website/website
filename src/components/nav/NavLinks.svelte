@@ -1,15 +1,34 @@
+<script context="module" lang="ts">
+
+    export interface NavLinksParams {
+        langURL: string;
+        homeText: string;
+        bioText: string;
+        concertsText: string;
+        mediaText: string;
+        contactText: string;
+    }
+
+</script>
+
 <script lang="ts">
     import NavLink from "../utils/NavLink.svelte";
+    import LanguagePicker from "./LanguagePicker.svelte";
 
     export let vertical = false;
+
+    export let params: NavLinksParams;
+
 </script>
 
 <ul class="links" class:vertical={vertical}>
-    <li><NavLink href="/">Home</NavLink></li>
-    <li><NavLink href="/bio">Bio</NavLink></li>
-    <li><NavLink href="/concerts">Concerts</NavLink></li>
-    <li><NavLink href="/media">Media</NavLink></li>
-    <li><NavLink href="/contact">Contact</NavLink></li>
+    <li><NavLink href="/{params.langURL}">{ params.homeText }</NavLink></li>
+    <li><NavLink href="/{params.langURL}/bio">{ params.bioText }</NavLink></li>
+    <li><NavLink href="/{params.langURL}/concerts">{ params.concertsText }</NavLink></li>
+    <li><NavLink href="/{params.langURL}/media">{ params.mediaText }</NavLink></li>
+    <li><NavLink href="/{params.langURL}/contact">{ params.contactText }</NavLink></li>
+
+    <li><LanguagePicker /></li>
 </ul>
 
 <style>

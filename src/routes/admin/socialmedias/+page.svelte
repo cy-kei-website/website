@@ -73,37 +73,10 @@
 </div>
 
 <style>
-
     form {
         position: relative;
     }
     label, button {
         margin-block: 0.5rem;
-    }
-
-    .saving-backdrop {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-
-        backdrop-filter: blur(5px);
-        background-color: rgba(0, 0, 0, 0.1);
-
-        animation: opacity 0.25s ease-out forwards;
-    }
-
-    @keyframes opacity {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
     }
 </style>
