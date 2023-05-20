@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { GalleryPicture } from "../stores/gallery";
+    import type { GalleryPicture } from "../../stores/gallery";
     import Modal from "./Modal.svelte";
 
     let modal: Modal;
@@ -24,7 +24,7 @@
         const a = document.createElement("a");
         a.href = url;
         a.style.display = "none";
-        a.download = "Cyprien_Keiser";
+        a.download = "Justina_La_Cour";
 
         document.body.appendChild(a);
         a.click();

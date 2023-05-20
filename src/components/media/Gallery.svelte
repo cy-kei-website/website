@@ -26,7 +26,7 @@
         {#each $gallery.pictures as picture}
             <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
             <div class="gallery-item" tabindex="0" on:keydown={(e) => {keyDown(e, picture);}} on:click={() => {openFullPicture(picture);}}>
-                <img src={picture.thumbnailUrl} alt="Cyprien Keiser" class="gallery-image" />
+                <img src={picture.thumbnailUrl} alt="Justina La Cour" class="gallery-image" />
                 <div class="gallery-image-copyright bg-very-light">&#169; { picture.copyright }</div>
             </div>
         {/each}
@@ -37,7 +37,7 @@
 <style>
 
     .gallery {
-        --thumb-max-size: 25rem;
+        --thumb-max-size: min(25rem, 90vw);
         --cell-width: var(--thumb-max-size);
         --cell-height: var(--thumb-max-size);
     }
