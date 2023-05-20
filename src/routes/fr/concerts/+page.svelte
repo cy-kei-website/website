@@ -3,7 +3,7 @@
     import SmartConcertList from "../../../components/concerts/SmartConcertList.svelte";
 </script>
 
-<PageStructure title="Concerts" bgImgName="concerts_bg.jpg" bgPositionX="0" bgPositionY="700px" bgPositionMobileX="60%" bgPositionMobileY="100%" imgName="concerts-extrapic.jpg">
+<PageStructure title="Concerts" bgImgName="concerts_bg.jpg" bgPositionX="0" bgPositionY="-75px" bgPositionMobileX="20%" bgPositionMobileY="-150px" imgName="concerts-extrapic.jpg">
     <h2>Prochains concerts</h2>
     <SmartConcertList mode="upcoming" />
 
