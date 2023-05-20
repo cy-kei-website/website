@@ -59,7 +59,7 @@
         gap: 2rem;
         
         padding: 1rem;
-        background-color: rgba(0, 0, 0, 0.85);
+        background-color: rgba(255, 255, 255, 0.85);
         height: 100vh;
     }
 
