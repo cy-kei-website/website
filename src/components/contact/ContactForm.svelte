@@ -3,7 +3,7 @@
     import LoadingSpinner from "../../components/utils/LoadingSpinner.svelte";
 
     export let okMessage: string = "Your message has been sent successfully";
-    export let errorMessage: string = "Your message has been sent successfully";
+    export let errorMessage: string = "An error has occured";
     export let nameFieldLabel: string = "Your name";
     export let emailFieldLabel: string = "Your email";
     export let messageFieldLabel: string = "Message";
